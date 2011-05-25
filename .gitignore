@@ -1,3 +1,5 @@
 .redcar
 _build
 *.*~
+*.rbc
+.DS_Store
