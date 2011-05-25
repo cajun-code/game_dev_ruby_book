@@ -1,7 +1,3 @@
-module Tic
-  module Tac
-    module Toe
-      # Your code goes here...
-    end
-  end
+module TicTacToe
+  # Your code goes here...
 end
