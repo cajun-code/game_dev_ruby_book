@@ -10,7 +10,7 @@ Basics:
 ---------
 
 .. toctree::
-   :maxdepth: 2
+  :maxdepth: 2
 
   overview
   installation
@@ -19,7 +19,7 @@ Console Games:
 ---------------
 
 .. toctree::
-   :maxdepth: 2
+  :maxdepth: 2
   
   tic_tac_toe
   hangman
@@ -29,22 +29,24 @@ Console Games:
 -------------------
 
 .. toctree::
-   :maxdepth: 2
+  :maxdepth: 2
+  
   blizzard
   office_attack
-
+  asteroids
+  
 3D Games:
 ------------
 
 .. toctree::
-   :maxdepth: 2
+  :maxdepth: 2
   
 
 Game development with Rails
 -----------------------------
 
 .. toctree::
-   :maxdepth: 2
+  :maxdepth: 2
   
   tic_tac_rails
   hangman_rails
