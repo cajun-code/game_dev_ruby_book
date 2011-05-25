@@ -14,6 +14,7 @@ Basics:
 
   overview
   installation
+  hello_basics
   
 Console Games:
 ---------------

@@ -16,6 +16,5 @@ Install on Mac OS X
 Configure Development Enviroment
 ----------------------------------
 
-Our first program
-----------------------------
+
 
