@@ -3,13 +3,52 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Game Development with Ruby's documentation!
+Welcome to Game Development with Ruby
 ======================================================
 
-Contents:
+Basics:
+---------
 
 .. toctree::
    :maxdepth: 2
+
+  overview
+  installation
+  
+Console Games:
+---------------
+
+.. toctree::
+   :maxdepth: 2
+  
+  tic_tac_toe
+  hangman
+  dice_game
+  
+2D Games:
+-------------------
+
+.. toctree::
+   :maxdepth: 2
+  blizzard
+  office_attack
+
+3D Games:
+------------
+
+.. toctree::
+   :maxdepth: 2
+  
+
+Game development with Rails
+-----------------------------
+
+.. toctree::
+   :maxdepth: 2
+  
+  tic_tac_rails
+  hangman_rails
+  dice_rails
 
 Indices and tables
 ==================
