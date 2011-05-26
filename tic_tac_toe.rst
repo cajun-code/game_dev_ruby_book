@@ -5,17 +5,21 @@ Problem Statement
 -------------------
 ::
 
-  Create a console program that can interactively play the game of Tic-Tac-Toe against a human player.
+  Create a console program that can interactively play the game of Tic-Tac-Toe
+  against a human player.
 
 .. image:: images/tic-tac-toe.png
 
-I always like starting with a general problem of what needs to be built.  Lets break down what is in a tic-tac-toe game.
-Frist thing I think of is the board.  This board is a 3 x 3 grid which gives us 9 cells to deal with. A player takes turn 
-placeing there marker in one of the cells on the board.  The marker is usually an "X" or an "O".  
+I always like starting with a general problem of what needs to be built.  Lets
+break down what is in a tic-tac-toe game. First thing I think of is the board.
+This board is a 3 x 3 grid which gives us 9 cells to deal with. A player takes
+turn placing there marker in one of the cells on the board.  The marker is
+usually an "X" or an "O".  
 
 .. image:: images/ttt_uml.png
 
-.. Create a program that can interactively play the game of Tic-Tac-Toe against a human player and never lose.
+.. Create a program that can interactively play the game of Tic-Tac-Toe
+.. against a human player and never lose.
 
 Create a Project
 -----------------
@@ -33,13 +37,14 @@ The first thing that needs to be done is create a project space
   create  tic-tac-toe/lib/tic-tac-toe/version.rb
   Initializating git repo in ./tic-tac-toe
   
-This creates a basic project structure and sets up an git repository for you.  The Gemfile is a 
-Bundler file that keeps track of the dependencies of the application.  We will see more about this
-later.  
+This creates a basic project structure and sets up an git repository for you.
+The Gemfile is a Bundler file that keeps track of the dependencies of the
+application.  We will see more about this later.  
 
-The Rakefile is an Task master.  Basicly Rake is a command line utility for running tasks simular to an make file or an 
-ant build script. it gives you the ability to run tests and package up your application.  I will show the testing in a little bit.
-The packaging we will discuss at the end of this chapter.  
+The Rakefile is an Task master.  Basically Rake is a command line utility for
+running tasks similar to an make file or an ant build script. it gives you the
+ability to run tests and package up your application.  I will show the testing
+in a little bit. The packaging we will discuss at the end of this chapter.  
 
 The gemspec file defines the project information such as name and description and author information on a project.  We will edit 
 that information when we start discussing packaging 
@@ -47,14 +52,14 @@ that information when we start discussing packaging
 The lib directory is the directory that we put all our source code. Bundler creates a starter file that is the same name as the 
 project.  It also created a directory by that same name.  Inside the directory you see a file called version.rb. 
 
-At this point I would create the inital commit to my source control system.  I use git for most of my projects.  
+At this point I would create the initial commit to my source control system.  I use git for most of my projects.  
 
 .. code-block:: bash
   
   $ git add .
-  $ git commit -m "Inital Project Create"
+  $ git commit -m "Initial Project Create"
   
-I usually try to keep my commits to a repository small and concise to one topic.  I will perodicly show my commit points 
+I usually try to keep my commits to a repository small and concise to one topic.  I will periodically show my commit points 
 in the book. Now that we have been introduced to the basic project structure lets get on with the project.
 
 Creating the Board
@@ -95,7 +100,7 @@ Open board_test.rb so we can start creating our test
   adding the ../lib to that path string.  Then it expands that string it creates a full absolute path string and the "<<" means to 
   push that string on top of the load path.  this way it can find the location of the classes we write for the test
 
-The foucs points we need to look at are lines 7 - 9.  We create a new instance of the Board class on line 7.  Then on line 8 we 
+The focus points we need to look at are lines 7 - 9.  We create a new instance of the Board class on line 7.  Then on line 8 we 
 check to see if the board was created successfully by checking to see if the board object has been created.  As well as checking 
 the size of the board on line 9.  So lets run the test. 
 
@@ -114,15 +119,15 @@ the size of the board on line 9.  So lets run the test.
     1) Error:
   test_board_create(BoardTest):
   NameError: Missing or uninitialized constant: BoardTest::TicTacToe
-      kernel/common/module.rb:529:in `const_missing'
-      board_test.rb:5:in `test_board_create'
-      kernel/bootstrap/array.rb:71:in `each'
-      kernel/bootstrap/array.rb:71:in `each'
+      kernel/common/module.rb:529:in 'const_missing'
+      board_test.rb:5:in 'test_board_create'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
   
   1 tests, 0 assertions, 0 failures, 1 errors
 
 I know what you are thinking "Oh Lord ... I see errors what happened."  I expected this to happen.  First you have to fail to
-understand how to pass.  We see here we have a NameError in the test.  This means that it does not understand what is ment by 
+understand how to pass.  We see here we have a NameError in the test.  This means that it does not understand what is meant by 
 TicTacToe.  Ok lets try and fix this. First we need to create the board file "lib/tic-tac-toe/board.rb".  
 
 .. code-block:: ruby
@@ -154,7 +159,21 @@ Lets run the test to see if we are successful
   
   1 tests, 2 assertions, 0 failures, 0 errors
 
-Now that we have the code for a basic class in place, Lets talk about it. 
+.. note::
+  This would be a good place to commit your code to the source repository.
+
+Now that we have the code for a basic class in place, Lets discuss it.
+
+First thing we see in this code is the module statement.  Module is used to
+define a logical seperations in code.  A module can contain method defnitions,
+class definitions, and even other module defnitions.  Modules can be included in
+other modules or classes with the simple:
+
+.. code-block:: ruby
+
+  include <Module Name>
+  
+
 
 Creating the Player
 --------------------
