@@ -9,4 +9,13 @@ class BoardTest < Test::Unit::TestCase
     assert_not_nil board
     assert_equal board.size, 9 
   end
+  
+  def test_place_marker
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert_equal board.grid[4], "X"
+    assert_raise( TicTacToe::BoardError) {board.place_marker(9,"O")}
+    assert_raise( TicTacToe::BoardError) {board.place_marker(4, "X")}
+  end
+  
 end 

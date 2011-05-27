@@ -173,6 +173,163 @@ other modules or classes with the simple:
 
   include <Module Name>
   
+The next thing on line 2 is the class statement.  Creating a class is like
+defining a blueprint for a building.  Calling dot new on a class, constructs the
+class in memory and runs the initialize method.
+
+What the initialize method is use for is to create and initialize the base
+values used by the class.  The first thing that is initialized is the grid
+variable on line 6.  The at(@) symbol in front of the name means that it's an
+instance variable.  Instance variables live inside the object that is created 
+in memory.  Line 7, inside the porrenthses, is called a range. A range is a
+counter that will count from 0 to 8. The each method that is called off that
+range will be executed every time.  The code that is inside the curly braces is
+a single line block of code.  That code is what gets run every time the range
+counts, nil is being put on the array at that location. Once that counter hits 8
+it stops.
+
+.. note::
+  Nil is a special object in ruby. It repesents a non-existant state.
+    
+Lines 9-11 define a method called size.  This method returns the size of the
+grid array.  Return is an implicit keyword, meaning that I dont' have to type it. 
+Ruby will automaticly return the results of the last line in a method.
+
+Now that we understand what how this works so far, we need to add a method that
+allows us to place a marker on the grid. Also raise an error if the a marker is
+placed outside of the board or if the marker is palced on top of a already taken
+cell.  Back to the board_test.rb:
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_place_marker
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert_equal board.grid[4], "X"
+    assert_raise TicTacToe::BoardError {board.place_marker(9,"O")}
+    assert_raise TicTacToe::BoardError {board.place_marker(4, "X")}
+  end
+  ...
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .E
+  Finished in 0.002139 seconds.
+  
+    1) Error:
+  test_place_marker(BoardTest):
+  NoMethodError: undefined method 'place_marker' on an instance of TicTacToe::Board.
+      kernel/delta/kernel.rb:85:in 'place_marker (method_missing)'
+      test/board_test.rb:15:in 'test_place_marker'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  2 tests, 2 assertions, 0 failures, 1 errors
+
+Notice when i run the test as expected the test fails.  This test is simular to
+the first one.  One thing to point out is the assert_raise method.  it check to
+see if the code raises an error when certin conditions are met.
+
+Now lets write the place marker method on the board class
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def place_marker(index, marker)
+    @grid[index] = marker
+  end
+  ...
+
+Time to run it and see what we get.
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .E
+  Finished in 0.002041 seconds.
+  
+    1) Error:
+  test_place_marker(BoardTest):
+  NoMethodError: undefined method 'BoardError' on an instance of BoardTest.
+      kernel/delta/kernel.rb:85:in 'BoardError (method_missing)'
+      test/board_test.rb:17:in 'test_place_marker'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  2 tests, 3 assertions, 0 failures, 1 errors
+
+Oh no what did I do wrong.  There is no BoardError defined.  So lets create
+that. Go to the lib/tic-tac-toe/board.rb file and add:
+
+.. code-block:: ruby
+  :linenos:
+
+  class BoardError < Exception
+  end
+
+Now rerun the test again:
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .F
+  Finished in 0.069226 seconds.
+  
+    1) Failure:
+  test_place_marker(BoardTest)
+      [test/board_test.rb:17:in 'test_place_marker'
+       kernel/bootstrap/array.rb:71:in 'each'
+       kernel/bootstrap/array.rb:71:in 'each']:
+  <TicTacToe::BoardError> exception expected but none was thrown.
+  
+  2 tests, 4 assertions, 1 failures, 0 errors
+
+Well it failed.  Was that what we exepcted? not really so how do we fix this. We
+need to add the raise statement to the place_marker method.
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def place_marker(index, marker)
+    if index < 0 or index > GRID_SIZE 
+      raise BoardError.new, "#{index} is outside the board"
+    end
+    if @grid[index].nil?
+      @grid[index] = marker
+    else
+      raise BoardError.new, "#{index} is already used"
+    end
+  end
+  ...
+  
+Time to run the test again and see what that says:
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  ..
+  Finished in 0.002402 seconds.
+  
+  2 tests, 5 assertions, 0 failures, 0 errors
+
+Yay, the test passes.  Time to explain what is going on.
+
+.. note::
+  Test passing is always a good time to commit back to source control.
+  
 
 
 Creating the Player
