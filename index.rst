@@ -33,8 +33,9 @@ Console Games:
   :maxdepth: 2
   
   blizzard
+  letter_attack
   office_attack
-  asteroids
+  
   
 3D Games:
 ------------
@@ -42,6 +43,7 @@ Console Games:
 .. toctree::
   :maxdepth: 2
   
+  ruby_ninja
 
 Game development with Rails
 -----------------------------
@@ -50,7 +52,6 @@ Game development with Rails
   :maxdepth: 2
   
   tic_tac_rails
-  hangman_rails
   dice_rails
 
 Indices and tables
