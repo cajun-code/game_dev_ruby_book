@@ -1,4 +1,4 @@
-.. Game Development with Ruby documentation master file, created by
+.. Game Development with Ruby master file, created by
    sphinx-quickstart on Tue May 24 08:43:37 2011.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
