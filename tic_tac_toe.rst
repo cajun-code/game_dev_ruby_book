@@ -421,6 +421,7 @@ present.  so lets take a look at a board and see what we can tell.
 
 .. image:: images/board.png
    :align: right
+   :width: 100
   
 As we can see by the board pattern analsys show that there are 8 winning
 patterns. The patterns can be broken up into 3 sections.  The horizontial
