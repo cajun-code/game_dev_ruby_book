@@ -7,7 +7,7 @@ Welcome to Game Development with Ruby
 ======================================================
 
 Basics:
----------
+=========
 
 .. toctree::
   :maxdepth: 2
@@ -17,7 +17,7 @@ Basics:
   hello_basics
   
 Console Games:
----------------
+================
 
 .. toctree::
   :maxdepth: 2
@@ -27,7 +27,7 @@ Console Games:
   dice_game
   
 2D Games:
--------------------
+============
 
 .. toctree::
   :maxdepth: 2
@@ -38,7 +38,7 @@ Console Games:
   
   
 3D Games:
-------------
+==============
 
 .. toctree::
   :maxdepth: 2
@@ -46,7 +46,7 @@ Console Games:
   ruby_ninja
 
 Game development with Rails
------------------------------
+==============================
 
 .. toctree::
   :maxdepth: 2
