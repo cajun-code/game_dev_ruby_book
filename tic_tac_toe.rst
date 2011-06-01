@@ -420,8 +420,8 @@ The next challenge we have is to check the board and see if there is a winner
 present.  so lets take a look at a board and see what we can tell.
 
 .. image:: images/board.png
-   :align: right
-   :width: 100
+    :width: 200px
+   
   
 As we can see by the board pattern analsys show that there are 8 winning
 patterns. The patterns can be broken up into 3 sections.  The horizontial
