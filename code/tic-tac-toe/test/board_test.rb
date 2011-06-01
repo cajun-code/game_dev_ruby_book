@@ -18,4 +18,21 @@ class BoardTest < Test::Unit::TestCase
     assert_raise( TicTacToe::BoardError) {board.place_marker(4, "X")}
   end
   
+  def test_clear_board
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert_equal board.grid[4], "X"
+    board.clear
+    assert_nil board.grid[4]
+  end
+  
+  def test_check_board
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    board.place_marker(5, "X")
+    board.place_marker(3, "X")
+    board.check_winner
+    assert_equals board.winner, "X" 
+  end
+  
 end 

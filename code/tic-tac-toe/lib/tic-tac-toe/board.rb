@@ -5,6 +5,16 @@ module TicTacToe
   
   class Board
     GRID_SIZE = 8
+    WINNING_PATTERNS = [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [2,4,6],
+      [0,4,8],
+    ]
     attr_reader :grid
     def initialize()
       @grid = []
@@ -22,6 +32,10 @@ module TicTacToe
       else
         raise BoardError.new, "#{index} is already used"
       end
+    end
+    
+    def clear
+      @grid.clear
     end
   end
 end

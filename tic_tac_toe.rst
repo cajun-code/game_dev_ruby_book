@@ -195,6 +195,9 @@ Lines 9-11 define a method called size.  This method returns the size of the
 grid array.  Return is an implicit keyword, meaning that I dont' have to type it. 
 Ruby will automaticly return the results of the last line in a method.
 
+Place Marker
+^^^^^^^^^^^^^^^^
+
 Now that we understand what how this works so far, we need to add a method that
 allows us to place a marker on the grid. Also raise an error if the a marker is
 placed outside of the board or if the marker is palced on top of a already taken
@@ -330,7 +333,138 @@ Yay, the test passes.  Time to explain what is going on.
 .. note::
   Test passing is always a good time to commit back to source control.
   
+Now lets start with the defnition of the place_marker method on line 2.  The if
+statement on line 3 starts a decision block.  Basicaly if the index is not
+between 0 and 8 then execute line 4. This line raises an error called a
+BoardError, with the message "#{index} is outside the board".  The "#{index}" is
+injecting the value of index into the string, so if index = 9 then it would
+print "9 is outside the board".  The raise statement also stops execution of the
+mehtod, so nothing after the error was raised was executed.
 
+After we have made it through the first if we come to check if the block on the
+board is empty.  "nil?" will return true for false depending if a nil exists in
+the object we are calling the method on.  In this case if the cell is nil then
+place the marker there if not rase an error that the cell is already taken.
+
+Clearing the Board
+^^^^^^^^^^^^^^^^^^^^^^
+Now that we can place markers on the board, we need a way to clear the board.
+To test this should be simple as these steps:
+
+1. Place a marker on the board
+2. Assert that the marker is there
+3. Call clear on the board
+4. Assert that that cell is nil
+
+So lets put this to code. Create a new test method in board_test.rb
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_clear_board
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert_equal board.grid[4], "X"
+    board.clear
+    assert_nil board.grid[4]
+  end
+  ...
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .E.
+  Finished in 0.003509 seconds.
+  
+    1) Error:
+  test_clear_board(BoardTest):
+  NoMethodError: undefined method 'clear' on an instance of TicTacToe::Board.
+      kernel/delta/kernel.rb:85:in 'clear (method_missing)'
+      test/board_test.rb:25:in 'test_clear_board'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  3 tests, 6 assertions, 0 failures, 1 errors
+  
+Now we have our failing test lets code the clear method:
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def clear
+    @grid.clear
+  end
+  ...
+  
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  ...
+  Finished in 0.0025109999999999998 seconds.
+  
+  3 tests, 7 assertions, 0 failures, 0 errors
+
+Line 3 is the focus point for this method.  Clear is a method on an array that
+removes all items from the array.
+
+Checking the Board for a winner
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The next challenge we have is to check the board and see if there is a winner
+present.  so lets take a look at a board and see what we can tell.
+
+.. image:: images/board.png
+   :align: right
+  
+As we can see by the board pattern analsys show that there are 8 winning
+patterns. The patterns can be broken up into 3 sections.  The horizontial
+patterns such as [0,1,2], [3,4,5], and [6,7,8].  The virtical patterns are
+[0,3,6], [1,4,7], and [2,5,8].  The diagnogal patterns are [2,4,6] and [0,4,8].
+So with this knowlage lets create a constant for winning patterns in the board
+class. To decleare a constant you start the name with a capitial.  
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  WINNING_PATTERNS = [
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [2,4,6],
+      [0,4,8],
+    ]
+  ...
+
+With the patterns declared we can write the test to check the winners.
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_check_board
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    board.place_marker(5, "X")
+    board.place_marker(3, "X")
+    board.check_winner
+    assert_equals board.winner, "X" 
+  end
+  ...
+
+
+
+Keeping Track of the last move
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Creating the Player
 --------------------
