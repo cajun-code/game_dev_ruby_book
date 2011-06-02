@@ -454,13 +454,102 @@ With the patterns declared we can write the test to check the winners.
   ...
   def test_check_board
     board = TicTacToe::Board.new
-    board.place_marker(4, "X")
-    board.place_marker(5, "X")
     board.place_marker(3, "X")
+    board.place_marker(4, "X")
+    board.place_marker(5, "X")    
     board.check_winner
     assert_equals board.winner, "X" 
   end
   ...
+
+This test tests only one possible case of the horizontal center row.  Lets
+rewrite the test to loop through the pattern array and test each condition.
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_check_board
+    board = TicTacToe::Board.new    
+    TicTacToe::Board::WINNING_PATTERNS.each do |pattern|
+      board.place_marker(pattern[0], "X")
+      board.place_marker(pattern[1], "X")
+      board.place_marker(pattern[2], "X")
+      assert board.check_winner
+      assert_equals board.winner, "X"
+      board.clear
+    end     
+  end
+  ...
+
+Now we run the test.
+
+.. code-block:: bash
+  
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .E..
+  Finished in 0.003186 seconds.
+  
+    1) Error:
+  test_check_board(BoardTest):
+  NoMethodError: undefined method 'check_winner' on an instance of TicTacToe::Board.
+      kernel/delta/kernel.rb:85:in 'check_winner (method_missing)'
+      test/board_test.rb:35:in 'test_check_board'
+      kernel/bootstrap/array.rb:71:in 'each'
+      test/board_test.rb:31:in 'test_check_board'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  4 tests, 7 assertions, 0 failures, 1 errors
+
+Ok, lets look at the test before we code the check_board mehtod.  On line 4 we
+see ".each do |pattern|" hanging off the WINNING_PATTERNS constant. The each
+method iterates over a block of code.  The block of code is defined by the "do"
+keyword until it reaches an "end" statement.  The pipe symbol("|") defines
+parameters from the each statement to the block. This means that pattern is a
+variable whose value will change each cycle through.  So first time through
+pattern will equal [0,1,2] and the next time it will equal [3,4,5] til it goes
+through all the elements listed in the patterns list.  Each element in the
+pattern is a 0 indexed list. That means pattern[0] will give me 0 as a value to
+pass to place_marker. Now we can use this technique to create the check_board
+method.
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def winner
+    @winner
+  end
+  def check_winner
+    result = false
+    Board::WINNING_PATTERNS.each do |pattern|
+      a = @grid[pattern[0]]
+      b = @grid[pattern[1]]
+      c = @grid[pattern[2]]
+      if a.nil? and b.nil? and c.nil?
+        next
+      end
+      if a == b and a == c
+        result = true
+        @winner = a
+        break
+      end
+      result
+    end
+    ...
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  ....
+  Finished in 0.0036179999999999997 seconds.
+  
+  4 tests, 23 assertions, 0 failures, 0 errors
 
 
 

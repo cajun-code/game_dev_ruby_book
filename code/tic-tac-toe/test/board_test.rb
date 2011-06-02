@@ -27,12 +27,15 @@ class BoardTest < Test::Unit::TestCase
   end
   
   def test_check_board
-    board = TicTacToe::Board.new
-    board.place_marker(4, "X")
-    board.place_marker(5, "X")
-    board.place_marker(3, "X")
-    board.check_winner
-    assert_equals board.winner, "X" 
+    board = TicTacToe::Board.new    
+    TicTacToe::Board::WINNING_PATTERNS.each do |pattern|
+      board.place_marker(pattern[0], "X")
+      board.place_marker(pattern[1], "X")
+      board.place_marker(pattern[2], "X")
+      assert board.check_winner
+      assert_equal board.winner, "X"
+      board.clear
+    end     
   end
   
 end 

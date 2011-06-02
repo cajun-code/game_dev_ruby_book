@@ -36,6 +36,27 @@ module TicTacToe
     
     def clear
       @grid.clear
+      @winner = nil
+    end
+    def winner
+      @winner
+    end
+    def check_winner
+      result = false
+      Board::WINNING_PATTERNS.each do |pattern|
+        a = @grid[pattern[0]]
+        b = @grid[pattern[1]]
+        c = @grid[pattern[2]]
+        if a.nil? and b.nil? and c.nil?
+          next
+        end
+        if a == b and a == c
+          result = true
+          @winner = a
+          break
+        end        
+      end
+      result
     end
   end
 end
