@@ -11,3 +11,8 @@ directives and notes used in creation of the book
 .. literalinclude:: ex/ex1.err
     :language: python
     :linenos:
+ 
+ texlive-latex-base   
+ texlive-latex-extra
+ texlive-fonts-recommended
+ 
