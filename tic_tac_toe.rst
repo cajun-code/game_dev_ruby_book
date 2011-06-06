@@ -452,12 +452,12 @@ With the patterns declared we can write the test to check the winners.
   :linenos:
   
   ...
-  def test_check_board
+  def test_check_winner
     board = TicTacToe::Board.new
     board.place_marker(3, "X")
     board.place_marker(4, "X")
     board.place_marker(5, "X")    
-    board.check_winner
+    assert board.check_winner
     assert_equals board.winner, "X" 
   end
   ...
@@ -469,7 +469,7 @@ rewrite the test to loop through the pattern array and test each condition.
   :linenos:
   
   ...
-  def test_check_board
+  def test_check_winner
     board = TicTacToe::Board.new    
     TicTacToe::Board::WINNING_PATTERNS.each do |pattern|
       board.place_marker(pattern[0], "X")
@@ -496,9 +496,9 @@ Now we run the test.
   test_check_board(BoardTest):
   NoMethodError: undefined method 'check_winner' on an instance of TicTacToe::Board.
       kernel/delta/kernel.rb:85:in 'check_winner (method_missing)'
-      test/board_test.rb:35:in 'test_check_board'
+      test/board_test.rb:35:in 'test_check_winner'
       kernel/bootstrap/array.rb:71:in 'each'
-      test/board_test.rb:31:in 'test_check_board'
+      test/board_test.rb:31:in 'test_check_winner'
       kernel/bootstrap/array.rb:71:in 'each'
       kernel/bootstrap/array.rb:71:in 'each'
   
@@ -551,10 +551,56 @@ method.
   
   4 tests, 23 assertions, 0 failures, 0 errors
 
+We having passing test, Let's go over the check_winner method.  On line 7,
+notice we are looping though the WINNING_PATTERNS constant again.  But the big
+points to look at are lines 12 and 17.  The next statement inside a loop tells
+the system to start the loop over on the next element.  The break statement
+tells the system to end the loop now, no matter how many elements are left.  So
+line 11 reads, If all elements in the cells are nil then skip to the next
+pattern.  The reverse holds true for break statement.  if a, b, and c are equal
+then quit the loop and declair we have a winner.
+
+This is great, everything is working and tested.  There is only one thing that
+needs to be done.  Create a failing test case for the check_winner method.
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_check_winner_no_selection
+    board = TicTacToe::Board.new
+    assert board.check_winner == false
+    assert_nil board.winner
+  end
+  
+  def test_check_winner_one_marker
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert board.check_winner == false
+    assert_nil board.winner
+  end
+  ...
+
+There is nothing really special about these two test.  I just wanted to make
+sure we had complete coverate and tested a couple of fail cases.  Running the
+test you should see the following result.  This wraps up the check_winner
+method.  
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  ......
+  Finished in 0.004778 seconds.
+  
+  6 tests, 27 assertions, 0 failures, 0 errors
 
 
 Keeping Track of the last move
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
 
 Creating the Player
 --------------------

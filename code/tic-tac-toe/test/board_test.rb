@@ -26,7 +26,7 @@ class BoardTest < Test::Unit::TestCase
     assert_nil board.grid[4]
   end
   
-  def test_check_board
+  def test_check_winner
     board = TicTacToe::Board.new    
     TicTacToe::Board::WINNING_PATTERNS.each do |pattern|
       board.place_marker(pattern[0], "X")
@@ -36,6 +36,19 @@ class BoardTest < Test::Unit::TestCase
       assert_equal board.winner, "X"
       board.clear
     end     
+  end
+  
+  def test_check_winner_no_selection
+    board = TicTacToe::Board.new
+    assert board.check_winner == false
+    assert_nil board.winner
+  end
+  
+  def test_check_winner_one_marker
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert board.check_winner == false
+    assert_nil board.winner
   end
   
 end 
