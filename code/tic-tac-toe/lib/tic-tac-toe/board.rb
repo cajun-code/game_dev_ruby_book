@@ -15,20 +15,21 @@ module TicTacToe
       [2,4,6],
       [0,4,8],
     ]
-    attr_reader :grid
+    
+    attr_reader :grid, :last_move
     def initialize()
-      @grid = []
-      (0..GRID_SIZE ).each {|x| @grid[x] = nil } 
+      @grid = []      
     end
-    def size
-      @grid.size
-    end
+    #def size
+    #  @grid.size
+    #end
     def place_marker(index, marker)
       if index < 0 or index > GRID_SIZE 
         raise BoardError.new, "#{index} is outside the board"
       end
       if @grid[index].nil?
         @grid[index] = marker
+        @last_move = index
       else
         raise BoardError.new, "#{index} is already used"
       end
@@ -36,6 +37,7 @@ module TicTacToe
     
     def clear
       @grid.clear
+      @last_move = nil
       @winner = nil
     end
     def winner

@@ -600,7 +600,187 @@ method.
 Keeping Track of the last move
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+The last thing left for the board class is to keep track of the last move.  When
+tic-tac-toe is played on a sheet of paper the two players can always see the
+others last move.  Playing inside a computer, We need a place to allow some of
+that visibility.  The best thing is to track the last move of any player on the
+board. Personally tracking more than the last move for this game is overkill.
+As always we need to create our test.
 
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_last_move
+    board = TicTacToe::Board.new
+    board.place_marker(4, "X")
+    assert_equal board.last_move, 4
+  end
+  ...
+
+.. code-block:: bash
+  
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .....E.
+  Finished in 0.004595999999999999 seconds.
+  
+    1) Error:
+  test_last_move(BoardTest):
+  NoMethodError: undefined method 'last_move' on an instance of TicTacToe::Board.
+      kernel/delta/kernel.rb:85:in 'last_move (method_missing)'
+      test/board_test.rb:57:in 'test_last_move'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  7 tests, 27 assertions, 0 failures, 1 errors
+
+This test is simple but it checks what we need.  First, it creates an instance
+of the board.  Then it places "X" in the center square.  After that it checks to
+see if the index 4 was recorded as the last move. Now let us fix the errors.
+
+.. code-block:: ruby
+  :linenos:
+  
+  class Board
+    ...
+    attr_reader :grid, :last_move
+    ...
+    def place_marker(index, marker)
+      if index < 0 or index > GRID_SIZE 
+        raise BoardError.new, "#{index} is outside the board"
+      end
+      if @grid[index].nil?
+        @grid[index] = marker
+        @last_move = index
+      else
+        raise BoardError.new, "#{index} is already used"
+      end
+    end
+    
+    ...
+    def clear
+      @grid.clear
+      @winner = nil
+      @last_move = nil
+    end
+    ...
+  end
+
+For this first we will add ":last_move" to the attr_reader line.  attr_reader
+creates a last_move method for us.  Next inside the place_marker method, when we
+place the marker on the grid. We store the index in the last_move variable.
+Just as a extra step we are going to clear the last_move variable in the clear
+method.  Now run the test to see if we cleared the error.  
+
+.. code-block:: bash
+
+  $ ruby test/board_test.rb
+  Loaded suite test/board_test
+  Started
+  .......
+  Finished in 0.003224 seconds.
+  
+  7 tests, 28 assertions, 0 failures, 0 errors
+
+There the Board class is complete.  Let's do a little house keeping to clean
+things up.  Under the test folder lets create a new file called
+ts_tic_tac_toe.rb.  What we are creating is a Test Suite.  This way we have one
+place to run all our test from.  Also we need to move the line that adds the lib
+directory to the path.  Plus we need to add a new copy of that line to add the
+other test we write to the path. The suite file should look like this:
+
+.. code-block:: ruby
+  
+  require "test/unit"
+
+  $LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__), "..", "lib"))
+  $LOAD_PATH << File.expand_path(File.join(File.dirname(__FILE__)))
+  
+  require "board_test"
+  
+Notice the only thing we have to do to include another test is require the test
+name. Lets run it and see if we get the same results:
+
+.. code-block:: bash
+  
+  $ ruby test/ts_tic_tac_toe.rb
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  .......
+  Finished in 0.004621 seconds.
+  
+  7 tests, 28 assertions, 0 failures, 0 errors
+
+Awsome All test pass.  Only one more thing I would like to do to clean up.
+Remove the following line from the board class, also we need to rerun the test
+to make sure we did not break somthing:
+
+.. code-block:: ruby
+
+  (0..GRID_SIZE ).each {|x| @grid[x] = nil }
+
+.. code-block:: bash
+  
+  $ ruby test/ts_tic_tac_toe.rb
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  F......
+  Finished in 0.053641999999999995 seconds.
+  
+    1) Failure:
+  test_board_create(BoardTest)
+      [/Users/adavis/Projects/game_dev_ruby_book/code/tic-tac-toe/test/board_test.rb:10:in `test_board_create'
+       kernel/bootstrap/array.rb:71:in `each'
+       kernel/bootstrap/array.rb:71:in `each']:
+  <0> expected but was
+  <9>.
+  
+  7 tests, 28 assertions, 1 failures, 0 errors
+
+Ok, what did I do wrong? The ansower is nothing.  The old trick of initalizing
+the array in a loop is wasted code.  This comes from Java and C++ where not doing
+this would be an error.  so this is one instance I would say we need to adjust
+the test.  I personally am not a fan of adjusting the test.  The only time
+adjust the test is ok if for some reason the code that it was testing in no
+longer valid.  Also we need to remove the size method from the board.  It is a
+nother fallback to java when that method would be necessary.  Lets make comment
+out the size method in the board class:
+
+.. code-block:: ruby
+
+  #def size
+  #  @grid.size
+  #end
+  
+The pound sign(#) is a single line comment.  if we start each line of the method
+with the comment then the method goes away.  Same goes for the test:
+
+.. code-block:: ruby
+  
+  def test_board_create
+    board = TicTacToe::Board.new  
+    assert_not_nil board
+    #assert_equal board.size, 9 
+  end
+
+The reason that i can say, that board.size and the initalizer are invalid and
+need to be removed if you notice in the last run of the test is that all the
+other test pass. Which proved that this code was not necessary.  Lets run the
+test again just to confirm:
+
+.. code-block:: bash
+
+  $ ruby test/ts_tic_tac_toe.rb
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  .......
+  Finished in 0.002908 seconds.
+  
+  7 tests, 27 assertions, 0 failures, 0 errors
+
+Every thing looks good, it's time to move on to the player class.
 
 Creating the Player
 --------------------
