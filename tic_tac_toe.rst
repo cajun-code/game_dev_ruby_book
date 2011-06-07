@@ -731,9 +731,9 @@ to make sure we did not break something:
   
     1) Failure:
   test_board_create(BoardTest)
-      [/Users/adavis/Projects/game_dev_ruby_book/code/tic-tac-toe/test/board_test.rb:10:in `test_board_create'
-       kernel/bootstrap/array.rb:71:in `each'
-       kernel/bootstrap/array.rb:71:in `each']:
+      [/Users/adavis/Projects/game_dev_ruby_book/code/tic-tac-toe/test/board_test.rb:10:in 'test_board_create'
+       kernel/bootstrap/array.rb:71:in 'each'
+       kernel/bootstrap/array.rb:71:in 'each']:
   <0> expected but was
   <9>.
   
@@ -785,6 +785,99 @@ Every thing looks good, it's time to move on to the player class.
 Creating the Player
 --------------------
 
+The Player is the person playing the game.  A player has a name and a marker.
+He/She also knows what board they are playing on.  The player knows how to take
+their turn by placing there marker at a given location, as well as check to see
+if there is a winner on the board.
+
+.. image:: images/player.png
+
+Based on the description above, the player class should look like the UML class
+diagram above.  UML is a modeling language used to pictorialy describe a
+program.  The class element that is pictured is a rectangle broken up into three
+compartments.  The top compartment is the title of the class.  the second
+compartment is for attributes of the class.  These are mostly instance variables
+inside the class.  The third compartment is for the operations of the class.
+The operations are methods that will preform actions on the attributes of the class
+
+With these defined we can start setting up the project to add the player class.
+
+1. Create player_test.rb under the test directory.
+2. Under lib/tic-tac-toe, create a player.rb
+3. Add the player_test to the ts_tic_tac_toe.rb test suite
+
+Lets look at ts_tic_tac_toe.rb first:
+
+.. code-block:: ruby
+
+  require "player_test"
+  
+This line adds the player test file to the test suite.  This way we can exeute all the
+tests created at once.  Now we can start creating the test for the player class.  Open
+player_test.rb and add the code:
+
+.. code-block:: ruby
+  :linenos:
+  
+  require "test/unit"
+  require "tic-tac-toe/board"
+  require "tic-tac-toe/player"
+  
+  class PlayerTest < Test::Unit::TestCase
+    def setup
+      @board = TicTacToe::Board.new
+    end
+    def test_player_create
+      player = TicTacToe::Player.new "Allan", @board, "X"
+      assert_not_nil player
+    end
+  end
+
+  
+If we run the test suite we should see:
+
+.. code-block:: bash
+
+  $ ruby test/ts_tic_tac_toe.rb
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  .......E
+  Finished in 0.004219 seconds.
+  
+    1) Error:
+  test_player_create(PlayerTest):
+  NameError: Missing or uninitialized constant: TicTacToe::Player
+      kernel/common/module.rb:533:in 'const_missing'
+      /home/alley/Projects/game_dev_ruby_book/code/tic-tac-toe/test/player_test.rb:10:in 'test_player_create'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  8 tests, 27 assertions, 0 failures, 1 errors
+
+.. code-block:: ruby
+  :lineos:
+  
+  module TicTacToe
+    class Player
+      attr_accessor :name,  :marker
+      attr_reader :board
+      def initialize(name ="", board = nil, marker = "" )
+        @name = name
+        @board = board
+        @marker = marker
+      end
+    end
+  end
+
+.. code-block:: bash
+
+  $ ruby test/ts_tic_tac_toe.rb
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  ........
+  Finished in 0.004096 seconds.
+  
+  8 tests, 28 assertions, 0 failures, 0 errors
 
 
 Creating the Computer Player
