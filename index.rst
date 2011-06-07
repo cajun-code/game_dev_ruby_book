@@ -6,7 +6,7 @@
 Welcome to Game Development with Ruby
 ======================================================
 
-Basics:
+Basics
 =========
 
 .. toctree::
@@ -16,7 +16,7 @@ Basics:
   installation
   hello_basics
   
-Console Games:
+Console Games
 ================
 
 .. toctree::
@@ -26,7 +26,7 @@ Console Games:
   hangman
   dice_game
   
-2D Games:
+2D Games
 ============
 
 .. toctree::
@@ -37,7 +37,7 @@ Console Games:
   office_attack
   
   
-3D Games:
+3D Games
 ==============
 
 .. toctree::
