@@ -800,6 +800,9 @@ compartment is for attributes of the class.  These are mostly instance variables
 inside the class.  The third compartment is for the operations of the class.
 The operations are methods that will preform actions on the attributes of the class
 
+Setting up the Player Class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 With these defined we can start setting up the project to add the player class.
 
 1. Create player_test.rb under the test directory.
@@ -878,6 +881,26 @@ If we run the test suite we should see:
   Finished in 0.004096 seconds.
   
   8 tests, 28 assertions, 0 failures, 0 errors
+
+One of the big things we see in the player class is "attr_accessor".
+Attr_accessor is a ruby helper method.  It generates accessor methods for a
+given variable.  so with "attr_accessor :name", the methods that are generated
+look like:
+
+.. code-block:: ruby
+  def name
+    @name
+  end
+  def name=(value)
+    @name = value
+  end
+  
+Attr_reader does has the same effect but it does not create the assignment
+method. There is also "attr_writer", which creates the writer method.
+
+Adding the take_turn method to Player
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
 
 Creating the Computer Player
