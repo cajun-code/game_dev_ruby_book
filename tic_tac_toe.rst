@@ -829,10 +829,11 @@ player_test.rb and add the code:
   class PlayerTest < Test::Unit::TestCase
     def setup
       @board = TicTacToe::Board.new
+      @player = TicTacToe::Player.new "Allan", @board, "X"
     end
     def test_player_create
-      player = TicTacToe::Player.new "Allan", @board, "X"
-      assert_not_nil player
+      @board.clear
+      assert_not_nil @player
     end
   end
 
@@ -857,8 +858,16 @@ If we run the test suite we should see:
   
   8 tests, 27 assertions, 0 failures, 1 errors
 
+Lets talk about the test for a second.  Setup is a new method that we have not
+seen before. this is a method on the TestCase class that is execute before each
+test is run.  By adding the method to our version we have overridden that method
+to preform the functionality we needed.  TestCase also provides a teardown
+method to clean up after a test.  We will go overloading methods later when we
+look at the computer player.
+
+
 .. code-block:: ruby
-  :lineos:
+  :linenos:
   
   module TicTacToe
     class Player
@@ -888,6 +897,7 @@ given variable.  so with "attr_accessor :name", the methods that are generated
 look like:
 
 .. code-block:: ruby
+  
   def name
     @name
   end
@@ -901,7 +911,26 @@ method. There is also "attr_writer", which creates the writer method.
 Adding the take_turn method to Player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Now for the heavy lifting of the player class, The take_turn method.  
+Now for the heavy lifting of the player class, The take_turn method. we always
+start with the stest so add this next section to the player_test.rb:
+
+.. code-block:: ruby
+  :linenos:
+  
+  ...
+  def test_take_turn
+    @board.clear
+    @player.take_turn(4)
+    assert_equal 4, @board.last_move
+    @board.clear
+    @player.take_turn(3)
+    @player.take_turn(4)
+    @player.take_turn(5)
+    assert_equal @board.winner, @player.marker
+  end
+  ...
+
+
 
 Creating the Computer Player
 -----------------------------
