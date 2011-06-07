@@ -901,7 +901,7 @@ method. There is also "attr_writer", which creates the writer method.
 Adding the take_turn method to Player
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
+Now for the heavy lifting of the player class, The take_turn method.  
 
 Creating the Computer Player
 -----------------------------
