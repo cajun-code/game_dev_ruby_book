@@ -96,7 +96,7 @@ Open board_test.rb so we can start creating our test
 
 .. note::
 
-  I know line 2 looks like a nightmare, but it's kind of simple, I am getting the dirname of the current file("test/board_test.rb")
+  I know line 2 looks like a nightmare, but it's kind of simple, I am getting the directory name(dirname) of the current file("test/board_test.rb")
   adding the ../lib to that path string.  Then it expands that string it creates a full absolute path string and the "<<" means to 
   push that string on top of the load path.  this way it can find the location of the classes we write for the test
 
@@ -165,8 +165,8 @@ Lets run the test to see if we are successful
 Now that we have the code for a basic class in place, Lets discuss it.
 
 First thing we see in this code is the module statement.  Module is used to
-define a logical seperations in code.  A module can contain method defnitions,
-class definitions, and even other module defnitions.  Modules can be included in
+define a logical separations in code.  A module can contain method definitions,
+class definitions, and even other module definitions.  Modules can be included in
 other modules or classes with the simple:
 
 .. code-block:: ruby
@@ -181,7 +181,7 @@ What the initialize method is use for is to create and initialize the base
 values used by the class.  The first thing that is initialized is the grid
 variable on line 6.  The at(@) symbol in front of the name means that it's an
 instance variable.  Instance variables live inside the object that is created 
-in memory.  Line 7, inside the porrenthses, is called a range. A range is a
+in memory.  Line 7, inside the parentheses, is called a range. A range is a
 counter that will count from 0 to 8. The each method that is called off that
 range will be executed every time.  The code that is inside the curly braces is
 a single line block of code.  That code is what gets run every time the range
@@ -189,18 +189,18 @@ counts, nil is being put on the array at that location. Once that counter hits 8
 it stops.
 
 .. note::
-  Nil is a special object in ruby. It repesents a non-existant state.
+  Nil is a special object in ruby. It represents a non-existant state.
     
 Lines 9-11 define a method called size.  This method returns the size of the
-grid array.  Return is an implicit keyword, meaning that I dont' have to type it. 
-Ruby will automaticly return the results of the last line in a method.
+grid array.  Return is an implicit keyword, meaning that I don't' have to type it. 
+Ruby will automatically return the results of the last line in a method.
 
 Place Marker
 ^^^^^^^^^^^^^^^^
 
 Now that we understand what how this works so far, we need to add a method that
 allows us to place a marker on the grid. Also raise an error if the a marker is
-placed outside of the board or if the marker is palced on top of a already taken
+placed outside of the board or if the marker is placed on top of a already taken
 cell.  Back to the board_test.rb:
 
 .. code-block:: ruby
@@ -234,9 +234,9 @@ cell.  Back to the board_test.rb:
   
   2 tests, 2 assertions, 0 failures, 1 errors
 
-Notice when i run the test as expected the test fails.  This test is simular to
+Notice when i run the test as expected the test fails.  This test is similar to
 the first one.  One thing to point out is the assert_raise method.  it check to
-see if the code raises an error when certin conditions are met.
+see if the code raises an error when cretin conditions are met.
 
 Now lets write the place marker method on the board class
 
@@ -297,7 +297,7 @@ Now rerun the test again:
   
   2 tests, 4 assertions, 1 failures, 0 errors
 
-Well it failed.  Was that what we exepcted? not really so how do we fix this. We
+Well it failed.  Was that what we expected? not really so how do we fix this. We
 need to add the raise statement to the place_marker method.
 
 .. code-block:: ruby
@@ -333,18 +333,18 @@ Yay, the test passes.  Time to explain what is going on.
 .. note::
   Test passing is always a good time to commit back to source control.
   
-Now lets start with the defnition of the place_marker method on line 2.  The if
-statement on line 3 starts a decision block.  Basicaly if the index is not
+Now lets start with the definition of the place_marker method on line 2.  The if
+statement on line 3 starts a decision block.  Basically if the index is not
 between 0 and 8 then execute line 4. This line raises an error called a
 BoardError, with the message "#{index} is outside the board".  The "#{index}" is
 injecting the value of index into the string, so if index = 9 then it would
 print "9 is outside the board".  The raise statement also stops execution of the
-mehtod, so nothing after the error was raised was executed.
+method, so nothing after the error was raised was executed.
 
 After we have made it through the first if we come to check if the block on the
 board is empty.  "nil?" will return true for false depending if a nil exists in
 the object we are calling the method on.  In this case if the cell is nil then
-place the marker there if not rase an error that the cell is already taken.
+place the marker there if not raise an error that the cell is already taken.
 
 Clearing the Board
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -423,12 +423,12 @@ present.  so lets take a look at a board and see what we can tell.
     :width: 200px
    
   
-As we can see by the board pattern analsys show that there are 8 winning
-patterns. The patterns can be broken up into 3 sections.  The horizontial
-patterns such as [0,1,2], [3,4,5], and [6,7,8].  The virtical patterns are
-[0,3,6], [1,4,7], and [2,5,8].  The diagnogal patterns are [2,4,6] and [0,4,8].
-So with this knowlage lets create a constant for winning patterns in the board
-class. To decleare a constant you start the name with a capitial.  
+As we can see by the board pattern analysis show that there are 8 winning
+patterns. The patterns can be broken up into 3 sections.  The horizontal
+patterns such as [0,1,2], [3,4,5], and [6,7,8].  The vertical patterns are
+[0,3,6], [1,4,7], and [2,5,8].  The diagonal patterns are [2,4,6] and [0,4,8].
+So with this knowledge lets create a constant for winning patterns in the board
+class. To declare a constant you start the name with a capital.  
 
 .. code-block:: ruby
   :linenos:
@@ -504,7 +504,7 @@ Now we run the test.
   
   4 tests, 7 assertions, 0 failures, 1 errors
 
-Ok, lets look at the test before we code the check_board mehtod.  On line 4 we
+Ok, lets look at the test before we code the check_board method.  On line 4 we
 see ".each do |pattern|" hanging off the WINNING_PATTERNS constant. The each
 method iterates over a block of code.  The block of code is defined by the "do"
 keyword until it reaches an "end" statement.  The pipe symbol("|") defines
@@ -558,7 +558,7 @@ the system to start the loop over on the next element.  The break statement
 tells the system to end the loop now, no matter how many elements are left.  So
 line 11 reads, If all elements in the cells are nil then skip to the next
 pattern.  The reverse holds true for break statement.  if a, b, and c are equal
-then quit the loop and declair we have a winner.
+then quit the loop and declare we have a winner.
 
 This is great, everything is working and tested.  There is only one thing that
 needs to be done.  Create a failing test case for the check_winner method.
@@ -582,7 +582,7 @@ needs to be done.  Create a failing test case for the check_winner method.
   ...
 
 There is nothing really special about these two test.  I just wanted to make
-sure we had complete coverate and tested a couple of fail cases.  Running the
+sure we had complete coverage and tested a couple of fail cases.  Running the
 test you should see the following result.  This wraps up the check_winner
 method.  
 
@@ -713,9 +713,9 @@ name. Lets run it and see if we get the same results:
   
   7 tests, 28 assertions, 0 failures, 0 errors
 
-Awsome All test pass.  Only one more thing I would like to do to clean up.
+Awesome All test pass.  Only one more thing I would like to do to clean up.
 Remove the following line from the board class, also we need to rerun the test
-to make sure we did not break somthing:
+to make sure we did not break something:
 
 .. code-block:: ruby
 
@@ -739,13 +739,13 @@ to make sure we did not break somthing:
   
   7 tests, 28 assertions, 1 failures, 0 errors
 
-Ok, what did I do wrong? The ansower is nothing.  The old trick of initalizing
+Ok, what did I do wrong? The answer is nothing.  The old trick of initializing
 the array in a loop is wasted code.  This comes from Java and C++ where not doing
 this would be an error.  so this is one instance I would say we need to adjust
 the test.  I personally am not a fan of adjusting the test.  The only time
 adjust the test is ok if for some reason the code that it was testing in no
-longer valid.  Also we need to remove the size method from the board.  It is a
-nother fallback to java when that method would be necessary.  Lets make comment
+longer valid.  Also we need to remove the size method from the board.  It is
+another fallback to java when that method would be necessary.  Lets make comment
 out the size method in the board class:
 
 .. code-block:: ruby
@@ -765,7 +765,7 @@ with the comment then the method goes away.  Same goes for the test:
     #assert_equal board.size, 9 
   end
 
-The reason that i can say, that board.size and the initalizer are invalid and
+The reason that i can say, that board.size and the initialize are invalid and
 need to be removed if you notice in the last run of the test is that all the
 other test pass. Which proved that this code was not necessary.  Lets run the
 test again just to confirm:
@@ -784,6 +784,7 @@ Every thing looks good, it's time to move on to the player class.
 
 Creating the Player
 --------------------
+
 
 
 Creating the Computer Player
