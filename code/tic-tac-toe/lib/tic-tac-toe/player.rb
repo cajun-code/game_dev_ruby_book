@@ -7,5 +7,10 @@ module TicTacToe
       @board = board
       @marker = marker
     end
-  end
+    
+    def take_turn(cell)
+      @board.place_marker(cell, @marker)
+      @board.check_winner
+    end
+  end  
 end

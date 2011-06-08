@@ -930,6 +930,42 @@ start with the stest so add this next section to the player_test.rb:
   end
   ...
 
+.. code-block:: bash
+
+  $ ruby test/ts_tic_tac_toe.rb
+  
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  ........E
+  Finished in 0.004625 seconds.
+  
+    1) Error:
+  test_take_turn(PlayerTest):
+  NoMethodError: undefined method 'take_turn' on an instance of TicTacToe::Player.
+      kernel/delta/kernel.rb:85:in 'take_turn (method_missing)'
+      /home/alley/Projects/game_dev_ruby_book/code/tic-tac-toe/test/player_test.rb:16:in 'test_take_turn'
+      kernel/bootstrap/array.rb:71:in 'each'
+      kernel/bootstrap/array.rb:71:in 'each'
+  
+  9 tests, 28 assertions, 0 failures, 1 errors
+
+.. code-block:: ruby
+  :linenos:
+  
+  def take_turn(cell)
+    @board.place_marker(cell, @marker)
+    @board.check_winner
+  end
+
+.. code-block:: bash
+
+  $ ruby test/ts_tic_tac_toe.rb
+  Loaded suite test/ts_tic_tac_toe
+  Started
+  .........
+  Finished in 0.004477 seconds.
+  
+  9 tests, 30 assertions, 0 failures, 0 errors
 
 
 Creating the Computer Player
