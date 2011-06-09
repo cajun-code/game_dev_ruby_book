@@ -949,6 +949,12 @@ start with the stest so add this next section to the player_test.rb:
   
   9 tests, 28 assertions, 0 failures, 1 errors
 
+In this test, we place the players marker in cell 4.  Then we check the last
+move on the board and make sure it is the cell we selected.  Then clear the
+board and place markers across the center row.  Finally test to see if the board
+winner is the player marker. Now that we have run the test and it failed.  It's
+time to code the take_turn method.
+
 .. code-block:: ruby
   :linenos:
   
@@ -966,6 +972,7 @@ start with the stest so add this next section to the player_test.rb:
   Finished in 0.004477 seconds.
   
   9 tests, 30 assertions, 0 failures, 0 errors
+
 
 
 Creating the Computer Player
