@@ -963,6 +963,9 @@ time to code the take_turn method.
     @board.check_winner
   end
 
+In the take_turn method, We use the board object to place the marker.  Then call
+the check_winner method off the board.  Now run the test.
+
 .. code-block:: bash
 
   $ ruby test/ts_tic_tac_toe.rb
@@ -973,10 +976,11 @@ time to code the take_turn method.
   
   9 tests, 30 assertions, 0 failures, 0 errors
 
-
+All test pass.  Now we can create the computer player.
 
 Creating the Computer Player
 -----------------------------
+
 
 
 Creating the Game Controller
