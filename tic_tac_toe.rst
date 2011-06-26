@@ -973,10 +973,37 @@ time to code the take_turn method.
   
   9 tests, 30 assertions, 0 failures, 0 errors
 
-
+The take turn method is fairly simple.  It builds on what was created for the
+board and packages these steps together.  This brings us to the Computer Player.
 
 Creating the Computer Player
 -----------------------------
+
+The ComputerPlayer class is going to extend what we build for the player.  It
+overrides the take_turn method and adds the AI(Artifical Intelengence) for
+placing the marker.
+
+.. image:: images/computer_player.png
+
+Let's create the test case for the computer player. Create a file called
+computer_player_test.rb in the test directory. Also we need to add it to the
+test suite so open up ts_tic_tac_toe.rb.
+
+.. code-block:: ruby
+  :linenos:
+  
+  # computer_player_test.rb
+  class ComputerPlayerTest < Test::Unit::TestCase
+  
+  end
+
+.. code-block:: ruby
+  :linenos:
+  
+  # add this line to ts_tic_tac_toe
+  require 'computer_player_test'
+
+
 
 
 Creating the Game Controller
