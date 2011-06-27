@@ -976,12 +976,10 @@ the check_winner method off the board.  Now run the test.
   
   9 tests, 30 assertions, 0 failures, 0 errors
 
-<<<<<<< HEAD
+
 The take turn method is fairly simple.  It builds on what was created for the
 board and packages these steps together.  This brings us to the Computer Player.
-=======
-All test pass.  Now we can create the computer player.
->>>>>>> c551292bd76311a0c443c3b4eff8a2eff61e3f5b
+
 
 Creating the Computer Player
 -----------------------------
